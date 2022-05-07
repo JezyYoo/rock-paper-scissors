@@ -20,13 +20,31 @@ const playRound =function(playerSelection,computerSelection){
     switch(playerSelection){
         case "ROCK":
             if(computerSelection == "ROCK")
-            {
+                return "Draw! Rock and Rock";
+            else if(computerSelection == "SCISSORS")
+                return "You Win! Rock beats Scissors";
+            else if(computerSelection == "PAPER")
+                return "You lose! Paper beats Rock";
 
-            
-            }
+        case "PAPER":
+            if(computerSelection == "PAPER")
+                return "Draw! Paper and Paper";
+            else if(computerSelection == "ROCK")
+                return "You Win! Paper beats Rock";
+            else if(computerSelection == "SCISSORS")
+                return "You lose! Scissors beats Paper";
+
+        case "SCISSORS":
+            if(computerSelection == "SCISSORS")
+                return "Draw! Scissors and Scissors";
+            else if(computerSelection == "PAPER")
+                return "You Win! Scissors beats Paper";
+            else if(computerSelection == "ROCK")
+                return "You lose! Rock beats Scissors";        
     }
     
-    // return "You Lose! Paper beats Rock"
+    // if(playerSelection === "ROCK" && computerSelection === "ROCK")
+    //     return "Draw! Rock and Rock";
 }
 
 const getRoundInfo = function(round,player,computer){
@@ -35,7 +53,7 @@ const getRoundInfo = function(round,player,computer){
     console.log("Computer: " + computer);
 }
 
-console.log(computerPlay())
+
 
 let playerScore = 0;
 let computerScore = 0;
@@ -48,3 +66,5 @@ const game = function(){
         console.log(playRound(playerSelection,computerSelection));
     }
 }
+
+game();
