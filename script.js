@@ -1,3 +1,6 @@
+let playerScore = 0;
+let computerScore = 0;
+
 const getRndInteger = function (min, max) {
     return Math.floor(Math.random() * (max - min +1)) + min;
   }
@@ -20,27 +23,57 @@ const playRound =function(playerSelection,computerSelection){
     switch(playerSelection){
         case "ROCK":
             if(computerSelection == "ROCK")
+            {
+                playerScore++;
+                computerScore++;
                 return "Draw! Rock and Rock";
+            }
             else if(computerSelection == "SCISSORS")
+            {
+                playerScore++;
                 return "You Win! Rock beats Scissors";
+            }
             else if(computerSelection == "PAPER")
+            {
+                computerScore++;
                 return "You lose! Paper beats Rock";
+            }
 
         case "PAPER":
             if(computerSelection == "PAPER")
+            {
+                playerScore++;
+                computerScore++;
                 return "Draw! Paper and Paper";
+            }
             else if(computerSelection == "ROCK")
+            {
+                playerScore++;
                 return "You Win! Paper beats Rock";
+            }
             else if(computerSelection == "SCISSORS")
+            {
+                computerScore++;
                 return "You lose! Scissors beats Paper";
+            }
 
         case "SCISSORS":
             if(computerSelection == "SCISSORS")
+            {
+                playerScore++;
+                computerScore++;
                 return "Draw! Scissors and Scissors";
+            }
             else if(computerSelection == "PAPER")
+            {
+                playerScore++;
                 return "You Win! Scissors beats Paper";
+            }
             else if(computerSelection == "ROCK")
+            {
+                computerScore++;
                 return "You lose! Rock beats Scissors";        
+            }
     }
     
     // if(playerSelection === "ROCK" && computerSelection === "ROCK")
@@ -55,8 +88,6 @@ const getRoundInfo = function(round,player,computer){
 
 
 
-let playerScore = 0;
-let computerScore = 0;
 
 const game = function(){
     for (let i = 1; i <= 5; i++) {
@@ -64,6 +95,7 @@ const game = function(){
         let computerSelection = computerPlay();
         getRoundInfo(i,playerSelection,computerSelection);
         console.log(playRound(playerSelection,computerSelection));
+        console.log(`Score\nYou: ${playerScore} Computer ${computerScore}`);
     }
 }
 
