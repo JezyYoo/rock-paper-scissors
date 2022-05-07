@@ -25,51 +25,51 @@ const playRound =function(playerSelection,computerSelection){
             if(computerSelection == "ROCK")
             {
 
-                return "Draw! Rock and Rock";
+                return console.log("%cDraw! Rock and Rock","background:rgb(167, 167, 1);color:white");
             }
             else if(computerSelection == "SCISSORS")
             {
                 playerScore++;
-                return "You Win! Rock beats Scissors";
+                return console.log("%cYou Win! Rock beats Scissors","background: rgb(74, 225, 9);color:white");
             }
             else if(computerSelection == "PAPER")
             {
                 computerScore++;
-                return "You lose! Paper beats Rock";
+                return console.log("%cYou Lose! Paper beats Rock",'background: rgb(239, 10, 10);color:white');
             }
 
         case "PAPER":
             if(computerSelection == "PAPER")
             {
 
-                return "Draw! Paper and Paper";
+                return console.log("%cDraw! Paper and Paper","background:rgb(167, 167, 1);color:white");
             }
             else if(computerSelection == "ROCK")
             {
                 playerScore++;
-                return "You Win! Paper beats Rock";
+                return console.log("%cYou Win! Paper beats Rock","background: rgb(74, 225, 9);color:white");
             }
             else if(computerSelection == "SCISSORS")
             {
                 computerScore++;
-                return "You lose! Scissors beats Paper";
+                return console.log("%cYou lose! Scissors beats Paper",'background: rgb(239, 10, 10);color:white');
             }
 
         case "SCISSORS":
             if(computerSelection == "SCISSORS")
             {
 
-                return "Draw! Scissors and Scissors";
+                return console.log("%cDraw! Scissors and Scissors","background:rgb(167, 167, 1);color:white");
             }
             else if(computerSelection == "PAPER")
             {
                 playerScore++;
-                return "You Win! Scissors beats Paper";
+                return console.log("%cYou Win! Scissors beats Paper","background: rgb(74, 225, 9);color:white");
             }
             else if(computerSelection == "ROCK")
             {
                 computerScore++;
-                return "You lose! Rock beats Scissors";        
+                return console.log("%cYou lose! Rock beats Scissors",'background: rgb(239, 10, 10);color:white');        
             }
     }
     
@@ -85,25 +85,34 @@ const getRoundInfo = function(round,player,computer){
 
 const getWinner = function(playerScore,computerScore){
     if(playerScore > computerScore)
-        return alert("Congratulations! You Win!");
+        return confirm("Congratulations! You Win!\n\nDo you want to try again?");
     else if(playerScore < computerScore)
-        return alert("Unfortunately, Computer Win");
+        return confirm("Unfortunately, Computer Win\n\nDo you want to try again?",'background: rgb(239, 10, 10);color:white');
     else
-        return alert("it's a Draw!");
+        return confirm("it's a Draw!\n\nDo you want to try again?");
 
 }
-
+const cleanScore = function(){
+    playerScore = 0;
+    computerScore = 0;
+    console.clear()
+}
 
 const game = function(){
     for (let i = 1; i <= 3; i++) {
+        console.log("%c--------------------------------------------------------",'background:rgb(0, 0, 0)');
         let playerSelection  = prompt("Rock, Paper or Scissors?").toUpperCase();
         let computerSelection = computerPlay();
         getRoundInfo(i,playerSelection,computerSelection);
-        console.log(playRound(playerSelection,computerSelection));
+        playRound(playerSelection,computerSelection);
         console.log(`Score\nYou: ${playerScore} Computer: ${computerScore}`);
     }
-    getWinner(playerScore,computerScore);
-
+    let tryAgainResult = getWinner(playerScore,computerScore);
+    if(tryAgainResult)
+    {
+        cleanScore();
+        game();
+    }
 }
 
 game();
