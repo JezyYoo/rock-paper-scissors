@@ -17,21 +17,34 @@ const computerPlay = function(){
 }
 
 const playRound =function(playerSelection,computerSelection){
-    // switch(playerSelection){
-    //     case "ROCK"
-    // }
+    switch(playerSelection){
+        case "ROCK":
+            if(computerSelection == "ROCK")
+            {
+
+            
+            }
+    }
     
     // return "You Lose! Paper beats Rock"
+}
+
+const getRoundInfo = function(round,player,computer){
+    console.log(`Round: ${round}`);
+    console.log("Player: " + player);
+    console.log("Computer: " + computer);
 }
 
 console.log(computerPlay())
 
 let playerScore = 0;
 let computerScore = 0;
+
 const game = function(){
-    for (let i = 0; i < 5; i++) {
+    for (let i = 1; i <= 5; i++) {
         let playerSelection  = prompt("Rock, Paper or Scissors?").toUpperCase();
         let computerSelection = computerPlay();
+        getRoundInfo(i,playerSelection,computerSelection);
         console.log(playRound(playerSelection,computerSelection));
     }
 }
