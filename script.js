@@ -1,5 +1,13 @@
 let playerScore = 0;
 let computerScore = 0;
+let buttons = document.querySelectorAll("button");
+let roundsCount = 0;
+
+const getRoundInfo = function(round,player,computer){
+    console.log(`Round: ${round}`);
+    console.log("Player: " + player);
+    console.log("Computer: " + computer);
+}
 
 const getRndInteger = function (min, max) {
     return Math.floor(Math.random() * (max - min +1)) + min;
@@ -19,7 +27,11 @@ const computerPlay = function(){
     // return ‘Rock’, ‘Paper’ or ‘Scissors’.;
 }
 
-const playRound =function(playerSelection,computerSelection){
+const playRound = function(playerSelection){
+    roundsCount++;
+    let computerSelection = computerPlay();
+    getRoundInfo(roundsCount,playerSelection,computerSelection);
+
     switch(playerSelection){
         case "ROCK":
             if(computerSelection == "ROCK")
@@ -73,15 +85,14 @@ const playRound =function(playerSelection,computerSelection){
             }
     }
     
-    // if(playerSelection === "ROCK" && computerSelection === "ROCK")
-    //     return "Draw! Rock and Rock";
 }
 
-const getRoundInfo = function(round,player,computer){
-    console.log(`Round: ${round}`);
-    console.log("Player: " + player);
-    console.log("Computer: " + computer);
-}
+buttons.forEach(button => {
+    let playerChoice = button.textContent.toUpperCase();
+    button.addEventListener('click',()=> playRound(playerChoice))
+});
+
+
 
 const getWinner = function(playerScore,computerScore){
     if(playerScore > computerScore)
@@ -98,21 +109,21 @@ const cleanScore = function(){
     console.clear()
 }
 
-const game = function(){
-    for (let i = 1; i <= 3; i++) {
-        console.log("%c--------------------------------------------------------",'background:rgb(0, 0, 0)');
-        let playerSelection  = prompt("Rock, Paper or Scissors?").toUpperCase();
-        let computerSelection = computerPlay();
-        getRoundInfo(i,playerSelection,computerSelection);
-        playRound(playerSelection,computerSelection);
-        console.log(`Score\nYou: ${playerScore} Computer: ${computerScore}`);
-    }
-    let tryAgainResult = getWinner(playerScore,computerScore);
-    if(tryAgainResult)
-    {
-        cleanScore();
-        game();
-    }
-}
+// const game = function(){
+//     for (let i = 1; i <= 3; i++) {
+//         console.log("%c--------------------------------------------------------",'background:rgb(0, 0, 0)');
+//         // let playerSelection  = prompt("Rock, Paper or Scissors?").toUpperCase();
+//         // let computerSelection = computerPlay();
+//         getRoundInfo(i,playerSelection,computerSelection);
+//         playRound(playerSelection,computerSelection);
+//         console.log(`Score\nYou: ${playerScore} Computer: ${computerScore}`);
+//     }
+//     let tryAgainResult = getWinner(playerScore,computerScore);
+//     if(tryAgainResult)
+//     {
+//         cleanScore();
+//         game();
+//     }
+// }
 
-game();
+// game();
