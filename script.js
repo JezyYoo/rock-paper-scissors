@@ -1,12 +1,20 @@
 let playerScore = 0;
 let computerScore = 0;
 let buttons = document.querySelectorAll("button");
+let rounds = document.querySelector(".rounds");
+let player = document.querySelector(".player");
+let computer = document.querySelector(".computer");
 let roundsCount = 0;
 
-const getRoundInfo = function(round,player,computer){
+const getRoundInfo = function(round,pl,comp){
     console.log(`Round: ${round}`);
-    console.log("Player: " + player);
-    console.log("Computer: " + computer);
+    console.log("Player: " + pl);
+    console.log("Computer: " + comp);
+
+    rounds.textContent = "Round: " + round;
+    player.textContent = "Player: " + pl;
+    computer.textContent = "Computer: " + comp;
+    
 }
 
 const getRndInteger = function (min, max) {
