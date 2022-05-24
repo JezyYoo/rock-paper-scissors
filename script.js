@@ -1,26 +1,56 @@
 let playerScore = 0;
 let computerScore = 0;
 let buttons = document.querySelectorAll("button");
-let rounds = document.querySelector(".rounds");
-let player = document.querySelector(".player");
-let computer = document.querySelector(".computer");
-let winner = document.querySelector(".winner");
-let playerTotal = document.querySelector('.playerTotal');
-let computerTotal = document.querySelector('.computerTotal');
+let playerInfo = document.querySelector('.player');
+let computerInfo = document.querySelector('.computer');
+let roundInfo = document.querySelector('.round');
+let infoBlock = document.querySelector('.info');
 let roundsCount = 0;
 
-const getRoundInfo = function(round,pl,comp){
-    rounds.textContent = "Round: " + round;
-    player.textContent = "Player: " + pl;
-    computer.textContent = "Computer: " + comp;
+buttons.forEach(button => {
+    let playerChoice = button.textContent.toUpperCase();
+    button.addEventListener('click',()=> playRound(playerChoice))
+});
 
+const getRoundInfo = function(round,player,computer){
+    console.log(`Round: ${round}`);
+    console.log("Player: " + player);
+    console.log("Computer: " + computer);
+}
     
+const getScoreInfo = function(rnd,plScore,compScore){
+    roundInfo.textContent = "Round: " + rnd;
+    playerInfo.textContent = "Player: " + plScore;
+    computerInfo.textContent = "Computer: " + compScore;
+
+    if(plScore == 3 || compScore == 3)
+    {
+        let choice = getWinner(plScore,compScore);
+        if(choice)
+            cleanScore();
+    }
 }
-const getRoundScoreInfo = function(plTotal,compTotal){
-    playerTotal.textContent = "Player Total:" + plTotal;
-    computerTotal.textContent = "Computer Total: " + compTotal;
-    console.log(plTotal,compTotal)
+
+const getWinner = function(playerScore,computerScore){
+    if(playerScore > computerScore)
+        return confirm("Congratulations! You Win!\n\nDo you want to try again?");
+    else if(playerScore < computerScore)
+        return confirm("Unfortunately, Computer Win\n\nDo you want to try again?",'background: rgb(239, 10, 10);color:white');
+    else
+        return confirm("it's a Draw!\n\nDo you want to try again?");
+
 }
+const cleanScore = function(){
+    playerScore = 0;
+    computerScore = 0;
+    roundsCount = 0;
+    console.clear()
+    infoBlock.textContent = "Lets Begin!";
+    roundInfo.textContent = "";
+    playerInfo.textContent = "";
+    computerInfo.textContent = "";
+}
+
 
 const getRndInteger = function (min, max) {
     return Math.floor(Math.random() * (max - min +1)) + min;
@@ -41,14 +71,6 @@ const computerPlay = function(){
 }
 
 const playRound = function(playerSelection){
-    if(playerScore == 3 || computerScore == 3)
-    {
-        getWinner(playerScore,computerScore);
-        if(tryAgainResult)
-        {
-            cleanScore();
-        }
-    }
     roundsCount++;
     let computerSelection = computerPlay();
     getRoundInfo(roundsCount,playerSelection,computerSelection);
@@ -57,91 +79,69 @@ const playRound = function(playerSelection){
         case "ROCK":
             if(computerSelection == "ROCK")
             {
-                winner.textContent = "Draw! Rock and Rock";
+                infoBlock.textContent = "Draw! Rock and Rock"
+                getScoreInfo(roundsCount,playerScore,computerScore);
+                return console.log("%cDraw! Rock and Rock","background:rgb(167, 167, 1);color:white");
             }
             else if(computerSelection == "SCISSORS")
             {
-                winner.textContent ="You Win! Rock beats Scissors";
+                infoBlock.textContent = "You Win! Rock beats Scissors"
                 playerScore++;
+                getScoreInfo(roundsCount,playerScore,computerScore);
+                return console.log("%cYou Win! Rock beats Scissors","background: rgb(74, 225, 9);color:white");
             }
             else if(computerSelection == "PAPER")
             {
-                winner.textContent = "You Lose! Paper beats Rock";
+                infoBlock.textContent = "You Lose! Paper beats Rock";
                 computerScore++;
+                getScoreInfo(roundsCount,playerScore,computerScore);
+                return console.log("%cYou Lose! Paper beats Rock",'background: rgb(239, 10, 10);color:white');
             }
 
         case "PAPER":
             if(computerSelection == "PAPER")
             {
-                winner.textContent = "Draw! Paper and Paper";
+                infoBlock.textContent = "Draw! Paper and Paper";
+                getScoreInfo(roundsCount,playerScore,computerScore);
+                return console.log("%cDraw! Paper and Paper","background:rgb(167, 167, 1);color:white");
             }
             else if(computerSelection == "ROCK")
             {
-                winner.textContent = "You Win! Paper beats Rock";
+                infoBlock.textContent ="You Win! Paper beats Rock"
                 playerScore++;
+                getScoreInfo(roundsCount,playerScore,computerScore);
+                return console.log("%cYou Win! Paper beats Rock","background: rgb(74, 225, 9);color:white");
             }
             else if(computerSelection == "SCISSORS")
             {
-                winner.textContent = "You lose! Scissors beats Paper";
+                infoBlock.textContent = "You lose! Scissors beats Paper"
                 computerScore++;
+                getScoreInfo(roundsCount,playerScore,computerScore);
+                return console.log("%cYou lose! Scissors beats Paper",'background: rgb(239, 10, 10);color:white');
             }
 
         case "SCISSORS":
             if(computerSelection == "SCISSORS")
             {
-                winner.textContent = "Draw! Scissors and Scissors";
+                infoBlock.textContent = "Draw! Scissors and Scissors"
+                getScoreInfo(roundsCount,playerScore,computerScore);
+                return console.log("%cDraw! Scissors and Scissors","background:rgb(167, 167, 1);color:white");
             }
             else if(computerSelection == "PAPER")
             {
-                winner.textContent = "You Win! Scissors beats Paper";
+                infoBlock.textContent = "You Win! Scissors beats Paper"
                 playerScore++;
+                getScoreInfo(roundsCount,playerScore,computerScore);
+                return console.log("%cYou Win! Scissors beats Paper","background: rgb(74, 225, 9);color:white");
             }
             else if(computerSelection == "ROCK")
             {
-                winner.textContent = "You lose! Rock beats Scissors";
+                infoBlock.textContent = "You lose! Rock beats Scissors"
                 computerScore++;
+                getScoreInfo(roundsCount,playerScore,computerScore);
+                return console.log("%cYou lose! Rock beats Scissors",'background: rgb(239, 10, 10);color:white');        
             }
     }
-    getRoundScoreInfo(playerScore,computerScore);
     
 }
 
-buttons.forEach(button => {
-    let playerChoice = button.textContent.toUpperCase();
-    button.addEventListener('click',()=> playRound(playerChoice))
-});
-
-
-
-const getWinner = function(playerScore,computerScore){
-    if(playerScore > computerScore)
-        return confirm("Congratulations! You Win!\n\nDo you want to try again?");
-    else if(playerScore < computerScore)
-        return confirm("Unfortunately, Computer Win\n\nDo you want to try again?",'background: rgb(239, 10, 10);color:white');
-    else
-        return confirm("it's a Draw!\n\nDo you want to try again?");
-
-}
-const cleanScore = function(){
-    playerScore = 0;
-    computerScore = 0;
-}
-
-// const game = function(){
-//     for (let i = 1; i <= 3; i++) {
-//         console.log("%c--------------------------------------------------------",'background:rgb(0, 0, 0)');
-//         // let playerSelection  = prompt("Rock, Paper or Scissors?").toUpperCase();
-//         // let computerSelection = computerPlay();
-//         getRoundInfo(i,playerSelection,computerSelection);
-//         playRound(playerSelection,computerSelection);
-//         console.log(`Score\nYou: ${playerScore} Computer: ${computerScore}`);
-//     }
-//     let tryAgainResult = getWinner(playerScore,computerScore);
-//     if(tryAgainResult)
-//     {
-//         cleanScore();
-//         game();
-//     }
-// }
-
-// game();
